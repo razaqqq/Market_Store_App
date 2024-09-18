@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Main from './Main';
+import {Provider}  from "react-redux"
+import { store } from './redux/store';
+import {StripeProvider} from '@stripe/stripe-react-native'
+
+const stripeKey = "pk_test_51OYnJRGJemxzZT0TLOSrtXbSOC5bFzKemUReCXc1sTDPXimrR99BgaIV67jyGXCNbO2RY3T2GfPlZ2uBnUcF1iMB00Jx8SrgIj"
+const merchantIdentifier = "anjay-gggg"
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+   <StripeProvider
+    merchantIdentifier={merchantIdentifier}
+    publishableKey={stripeKey}
+    threeDSecureParams={{ 
+      backgroundColor: "#fff",
+      timeout: 5
+    }}
+   >
+      <Provider store={store}>
+        <Main/>
+      </Provider>
+   </StripeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
